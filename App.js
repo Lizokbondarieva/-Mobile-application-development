@@ -1,69 +1,22 @@
-import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Button } from 'react-native';
-import ItemList from './ItemList';
-import LocationScreen from './LocationScreen';
-import MapScreen from './MapScreen';
-import UserInputScreen from './UserInputScreen';
-import SwitchScreen from './SwitchScreen';
-import PickerScreen from './PickerScreen';
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import TouchFeedbackScreen from './screens/TouchFeedbackScreen';
+import ScrollExampleScreen from './screens/ScrollExampleScreen';
+import SwipeListScreen from './screens/SwipeListScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [activeScreen, setActiveScreen] = useState('list');
-
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.nav}>
-        <Button
-          title="Список"
-          onPress={() => setActiveScreen('list')}
-          color={activeScreen === 'list' ? '#3498db' : '#95a5a6'}
-        />
-        <Button
-          title="Геолокація"
-          onPress={() => setActiveScreen('location')}
-          color={activeScreen === 'location' ? '#3498db' : '#95a5a6'}
-        />
-        <Button
-          title="Карта"
-          onPress={() => setActiveScreen('map')}
-          color={activeScreen === 'map' ? '#3498db' : '#95a5a6'}
-        />
-        <Button
-          title="Ввід"
-          onPress={() => setActiveScreen('input')}
-          color={activeScreen === 'input' ? '#3498db' : '#95a5a6'}
-        />
-        <Button
-          title="Перемикачі"
-          onPress={() => setActiveScreen('switch')}
-          color={activeScreen === 'switch' ? '#3498db' : '#95a5a6'}
-        />
-        <Button
-          title="Селектор"
-          onPress={() => setActiveScreen('picker')}
-          color={activeScreen === 'picker' ? '#3498db' : '#95a5a6'}
-        />
-      </View>
-
-      {activeScreen === 'list' && <ItemList />}
-      {activeScreen === 'location' && <LocationScreen />}
-      {activeScreen === 'map' && <MapScreen />}
-      {activeScreen === 'input' && <UserInputScreen />}
-      {activeScreen === 'switch' && <SwitchScreen />}
-      {activeScreen === 'picker' && <PickerScreen />}
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="TouchFeedback">
+        <Stack.Screen name="TouchFeedback" component={TouchFeedbackScreen} options={{ title: 'Touch Feedback' }} />
+        <Stack.Screen name="ScrollExample" component={ScrollExampleScreen} options={{ title: 'Scroll Example' }} />
+        <Stack.Screen name="SwipeList" component={SwipeListScreen} options={{ title: 'Swipe List' }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  nav: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    marginVertical: 10,
-  },
-});
